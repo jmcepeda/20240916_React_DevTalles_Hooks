@@ -1,38 +1,41 @@
-import { heroes } from "./data/heroes";
+// Promises
 
-import { heroes2 } from "./data/heroes";
+//resolve: Es el resultado positivo del callback
+// reject: Es el resultado negativo del callback
 
-import { villanos } from "./data/villanos";
+import { getHeroebyId, getHerosbyOwners } from "./bases/08-import-export";
 
-console.log("Heroes:", heroes);
-
-console.log("Heroes2:", heroes2);
-
-console.log("Villanos:", villanos);
-
-const getHeroebyId = (id) => {
-  return heroes.find((heroe) => {
-    if (heroe.id === id) {
-      return true;
+const promesa = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    const numRandom = Math.random() * 10;
+    console.log(numRandom);
+    if (numRandom > 5) {
+      const heroe = getHeroebyId(2);
+      resolve(heroe);
+      console.log("La promesa se cumplió");
     } else {
-      return false;
+      // reject("La promesa falló");
+      const heroesOwner = getHerosbyOwners("DC");
+      console.log(heroesOwner);
     }
-  });
-};
+  }, 1000);
+});
 
-const getHeroebyId2 = (id) =>
-  heroes.find((heroe) => {
-    if (heroe.id === id) {
-      return true;
-    } else {
-      return false;
-    }
-  });
+// console.log(promesa);
 
-const getHeroebyId3 = (id) => {
-  return heroes.find((heroe) => heroe.id === id);
-};
+// Hay Tres métodos muy importante
 
-console.log(getHeroebyId(2));
-console.log(getHeroebyId2(3));
-console.log(getHeroebyId3(4));
+// Then: Se ejecuta si la promesa se resolvión de forma positiva
+
+// Catch: Se ejecuta si la promesa se resolvión de forma negativa
+
+// Finally: Se Ejecuta siempre independientemente de si la promesa se resolvión de forma positiva o de forma negativa
+
+promesa.then((heroe) => {
+  console.log("Then de la promesa");
+  console.log(heroe);
+});
+
+promesa.catch(() => {
+  console.log("Catch de la promesa");
+});
