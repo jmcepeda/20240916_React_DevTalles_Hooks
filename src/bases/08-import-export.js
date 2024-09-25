@@ -61,10 +61,10 @@ const getHeroebyId3 = (id) => {
 
 const getHeroebyId4 = (id) => heroes.find((heroe) => heroe.id === id);
 
-export const getHerosbyOwners = (owner) =>
+const getHerosbyOwners = (owner) =>
   heroes.find((heroe) => heroe.owner === owner);
 
-const getHerosbyOwners2 = (owner) =>
+export const getHerosbyOwners2 = (owner) =>
   heroes.filter((heroe) => heroe.owner === owner);
 
 const imprimepantalla2 = () => {
