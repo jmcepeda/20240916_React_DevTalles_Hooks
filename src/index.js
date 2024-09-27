@@ -1,3 +1,4 @@
+import { getHeroebyId } from "./bases/08-import-export";
 const getImagePromesa = () => {
   const promesa = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -28,3 +29,54 @@ getImagePromesa()
 // console.log(getImagePromesa());
 
 // Ahora Vamos a hacer el mismo Ejercicio pero usando async
+// Usando la palabra async, consigo que una función me devuelva una promesa
+
+const getImageFunct = (Id) => {
+  const heroe = getHeroebyId(Id);
+  return heroe;
+};
+
+console.log("Heroe con Función Normal", getImageFunct(3));
+
+const getImageAsync = async (Id) => {
+  const heroe = getHeroebyId(Id);
+  return heroe;
+};
+
+console.log("Heroe con Función Async");
+getImageAsync(3)
+  .then((heroe) => {
+    console.log(heroe);
+  })
+  .catch((error) => {
+    console.error("Error al cargar la imagen", error);
+  });
+
+// await
+// Ahora Despues de ver como se puede conseguir que la respuesta de una Función sea una promesa
+// Vamos a ver que es esto del await
+
+// Con await, lo que vamos a conseguir es que podamos escribir código asincrono como si fuera código sincrono, con lo que simplificamos mucho la escritura del Código
+
+// Las Dos con diciones para poder usar await:
+//  - Debe usarse en funciones que devuelven una promesa
+//  - Debe estar en un bloque de código que está dentro de una función async
+
+const apikey = "qliUqRdzYPcj7pkqNG8NzCVOU0UgyQvz";
+
+const getImageAsyncAwait = async (Id) => {
+  // hay que tener en cuenta que fetch devuelve una promesa por definición
+  // await podemos usarlo solo en funciones que devuelven promesas
+  // Al poner await le estamos diciendo a la función que espere a que se resuelva la promesa
+  // Por tanto al obligar a que se espere a que se cumpla la promesa convertimos el código en Sincrono y podemos olvidarnos del .then .catch y .finally
+  const resp = await fetch(
+    `https://api.giphy.com/v1/gifs/random?apikey=${apikey}`
+  );
+  // La función .json() también devuelve una promesa, es por esto que puedo usar await para convertir el código en sincrono.
+  const { data } = await resp.json();
+  console.log(data.images.original.url);
+};
+
+const peticionasyncawait = getImageAsyncAwait(3);
+
+console.log(peticionasyncawait);
